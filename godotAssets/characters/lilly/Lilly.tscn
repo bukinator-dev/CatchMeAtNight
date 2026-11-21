@@ -1,0 +1,87 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://characters/lilly/Lilly.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/characters/lilly/lily-poses-clean.png" id="2_poses"]
+[ext_resource type="Shader" path="res://shaders/possession.gdshader" id="3_shader"]
+
+[sub_resource type="AtlasTexture" id="Atlas_idle"]
+atlas = ExtResource("2_poses")
+region = Rect2(20, 280, 520, 1203)
+
+[sub_resource type="AtlasTexture" id="Atlas_walk"]
+atlas = ExtResource("2_poses")
+region = Rect2(540, 280, 520, 1203)
+
+[sub_resource type="AtlasTexture" id="Atlas_jump"]
+atlas = ExtResource("2_poses")
+region = Rect2(1060, 280, 520, 1203)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lilly"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_idle")}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_idle")}, {"duration": 1.0, "texture": SubResource("Atlas_walk")}],
+"loop": true,
+"name": &"walk",
+"speed": 4.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_jump")}],
+"loop": false,
+"name": &"jump",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="Mat_possession"]
+shader = ExtResource("3_shader")
+shader_parameter/possession = 0.0
+shader_parameter/blood_tint = Color(0.62, 0.04, 0.08, 1)
+shader_parameter/glitch_strength = 0.018
+
+[sub_resource type="Gradient" id="Gradient_eye"]
+colors = PackedColorArray(1, 0.25, 0.2, 1, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="Tex_eye"]
+gradient = SubResource("Gradient_eye")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CanvasItemMaterial" id="Mat_glow"]
+blend_mode = 1
+light_mode = 1
+
+[node name="Lilly" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+material = SubResource("Mat_possession")
+sprite_frames = SubResource("SpriteFrames_lilly")
+animation = &"idle"
+offset = Vector2(0, -618.5)
+
+[node name="Face" type="Node2D" parent="."]
+
+[node name="WideSmile" type="Line2D" parent="Face"]
+points = PackedVector2Array(-78, -566, -55, -540, -25, -526, 0, -523, 25, -526, 55, -540, 78, -566)
+width = 9.0
+default_color = Color(0.32, 0.01, 0.04, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Eyes" type="Node2D" parent="Face"]
+
+[node name="EyeL" type="Sprite2D" parent="Face/Eyes"]
+material = SubResource("Mat_glow")
+position = Vector2(-40, -595)
+texture = SubResource("Tex_eye")
+
+[node name="EyeR" type="Sprite2D" parent="Face/Eyes"]
+material = SubResource("Mat_glow")
+position = Vector2(40, -595)
+texture = SubResource("Tex_eye")

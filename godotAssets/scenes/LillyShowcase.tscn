@@ -1,0 +1,73 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scenes/LillyShowcase.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://characters/lilly/Lilly.tscn" id="2_lilly"]
+
+[sub_resource type="Gradient" id="Gradient_spot"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="Tex_spot"]
+gradient = SubResource("Gradient_spot")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="LabelSettings" id="Label_title"]
+font_size = 28
+font_color = Color(0.92, 0.88, 0.95, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[node name="LillyShowcase" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.16, 0.09, 0.2, 1)
+
+[node name="Curtain" type="ColorRect" parent="."]
+offset_left = 160.0
+offset_top = 40.0
+offset_right = 1120.0
+offset_bottom = 600.0
+color = Color(0.38, 0.05, 0.1, 1)
+
+[node name="StageFloor" type="ColorRect" parent="."]
+offset_top = 600.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.23, 0.14, 0.1, 1)
+
+[node name="Darkness" type="CanvasModulate" parent="."]
+color = Color(0.55, 0.5, 0.6, 1)
+
+[node name="Spotlight" type="PointLight2D" parent="."]
+position = Vector2(640, 420)
+color = Color(1, 0.92, 0.75, 1)
+energy = 1.3
+texture = SubResource("Tex_spot")
+texture_scale = 1.6
+
+[node name="Lilly" parent="." instance=ExtResource("2_lilly")]
+position = Vector2(640, 640)
+scale = Vector2(0.42, 0.42)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Title" type="Label" parent="UI"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 700.0
+offset_bottom = 60.0
+text = "LILLY  —  lead vocalist"
+label_settings = SubResource("Label_title")
+
+[node name="Help" type="Label" parent="UI"]
+offset_left = 24.0
+offset_top = 676.0
+offset_right = 900.0
+offset_bottom = 704.0
+text = "1 idle   2 walk   3 jump   SPACE night falls"

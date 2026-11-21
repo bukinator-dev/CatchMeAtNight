@@ -1,6 +1,26 @@
+# Dependencies
 node_modules/
+
+# Build & Distribution
 dist/
+
+# Mobile builds
 android/
 ios/
+
+# Environment & Config
 .env
 *.local
+.mcp.json
+.claude/settings.local.json
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/settings.local.json
+.idea/

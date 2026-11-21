@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_player"]
+[ext_resource type="Script" path="res://scripts/player/FPHands.gd" id="2_hands"]
+
+[sub_resource type="CapsuleShape3D" id="Shape_body"]
+radius = 0.28
+height = 1.75
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_player")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.875, 0)
+shape = SubResource("Shape_body")
+
+[node name="Head" type="Node3D" parent="."]
+position = Vector3(0, 1.14, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+current = true
+fov = 72.0
+near = 0.02
+far = 60.0
+
+[node name="Ray" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -2.2)
+collision_mask = 3
+collide_with_areas = false
+
+[node name="Hands" type="Node3D" parent="Head/Camera3D"]
+script = ExtResource("2_hands")

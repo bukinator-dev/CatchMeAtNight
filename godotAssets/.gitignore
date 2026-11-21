@@ -1,0 +1,13 @@
+# Godot Cache & Build
+.godot/
+*.cache
+export_presets.cfg
+
+# Temporary Files
+*.tmp
+*~
+*.swp
+
+# Development Artifacts
+screenshots/
+debug.log

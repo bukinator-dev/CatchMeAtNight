@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { CAMERA_ROOMS, RoomId } from '@/config/RoomGraph';
+import { CAMERA_ROOMS } from '@/config/RoomGraph';
 import { CameraSystem } from '@/systems/CameraSystem';
 import { AISystem } from '@/systems/AISystem';
 import { LoreSystem } from '@/systems/LoreSystem';
@@ -96,20 +96,29 @@ export class CameraTablet {
     // Camera selector buttons
     this.buildCamButtons();
 
-    // Toggle button (bottom center of office view)
+    // Toggle button — raised and large enough to click comfortably
+    const btnY = GAME_HEIGHT - 52;
+    const btnBg = this.scene.add
+      .rectangle(GAME_WIDTH / 2, btnY, 220, 44, 0x001a00, 0.92)
+      .setDepth(depth - 5)
+      .setInteractive({ useHandCursor: true });
+
+    this.scene.add
+      .rectangle(GAME_WIDTH / 2, btnY, 222, 46, 0x44ff44, 0.25)
+      .setDepth(depth - 6);
+
     this.toggleButton = this.scene.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT - 24, '[ CAMERAS ]', {
-        fontSize: '16px',
+      .text(GAME_WIDTH / 2, btnY, '[ CAMERAS ]', {
+        fontSize: '20px',
         color: '#44ff44',
         fontFamily: 'monospace',
       })
       .setOrigin(0.5)
-      .setDepth(depth - 5)
-      .setInteractive({ useHandCursor: true });
+      .setDepth(depth - 4);
 
-    this.toggleButton.on('pointerover', () => this.toggleButton.setColor('#88ff88'));
-    this.toggleButton.on('pointerout', () => this.toggleButton.setColor('#44ff44'));
-    this.toggleButton.on('pointerdown', () => this.toggle());
+    btnBg.on('pointerover', () => { btnBg.setFillStyle(0x003300, 0.95); this.toggleButton.setColor('#88ff88'); });
+    btnBg.on('pointerout', () => { btnBg.setFillStyle(0x001a00, 0.92); this.toggleButton.setColor('#44ff44'); });
+    btnBg.on('pointerdown', () => this.toggle());
   }
 
   private buildCamButtons(): void {
